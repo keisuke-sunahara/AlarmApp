@@ -3,7 +3,7 @@
     "name": "AlarmApp",
     "slug": "AlarmApp",
     "version": "1.0.0",
-    "privacy": "1.0.0",
+    "privacy": "unlisted",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
