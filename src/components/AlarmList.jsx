@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, Switch,
 } from 'react-native';
 
 export default function AlarmList() {
+  const [switching, setSwitching] = useState(false);
+
   return (
-    <TouchableOpacity style={styles.container}>
-      <View style={styles.alarmListItem}>
+    <TouchableOpacity style={styles.alarmListItem}>
+      <View style={styles.alarmInner}>
         <Text style={styles.alarmListItemTime}>
           0:00
         </Text>
@@ -15,14 +17,17 @@ export default function AlarmList() {
         </Text>
       </View>
       <View>
-        <TouchableOpacity />
+        <Switch
+          onValueChange={(value) => setSwitching(value)}
+          value={switching}
+        />
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  alarmInner: {
     flex: 1,
   },
   alarmListItem: {
