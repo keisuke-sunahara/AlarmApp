@@ -1,9 +1,8 @@
 import React from 'react';
-// import AlarmList from '../components/AlarmList';
-import AlarmSetting from '../components/AlarmSetting';
+import AlarmList from '../components/AlarmList';
 
 export default function AlarmListScreen() {
   return (
-    <AlarmSetting />
+    <AlarmList />
   );
 }
