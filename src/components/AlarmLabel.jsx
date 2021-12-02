@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  StyleSheet, Text, TouchableOpacity, View,
+  StyleSheet, View, TouchableOpacity, Text,
 } from 'react-native';
 
-export default function AlarmRepeat() {
+export default function AlarmLabel() {
   return (
-    <TouchableOpacity style={styles.container}>
-      <View style={styles.repeatInner}>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.labelInner}>
         <View>
-          <Text style={styles.repeat}>繰り返し</Text>
+          <Text style={styles.label}>ラベル</Text>
         </View>
         <View>
-          <Text style={styles.repeatSelectionInner}>しない</Text>
+          <Text style={styles.labelSettingInner}>アラーム</Text>
         </View>
         <View>
-          <Text style={styles.repeatButton}>＞</Text>
+          <Text style={styles.labelButton}>＞</Text>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  repeatInner: {
+  labelInner: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 9,
@@ -34,21 +34,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.15)',
   },
-  repeat: {
+  label: {
     fontSize: 14,
     lineHeight: 24,
     color: '#FFFFFF',
   },
-  repeatSelection: {
-  },
-  repeatSelectionInner: {
+  labelSettingInner: {
     fontSize: 14,
     lineHeight: 24,
     color: 'rgba(255, 255, 255, 0.54)',
     marginRight: 11,
     marginLeft: 261,
   },
-  repeatButton: {
+  labelButton: {
     marginRight: 19,
     color: 'rgba(255, 255, 255, 0.54)',
     fontSize: 10,

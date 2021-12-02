@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 // import AlarmSetting from '../components/AlarmSetting';
-import AlarmRepeat from '../components/AlarmRepeat';
+import AlarmCreationDetails from '../components/AlarmCreationDetails';
 
 export default function AlarmCreateScreen() {
   return (
@@ -12,7 +12,7 @@ export default function AlarmCreateScreen() {
           <Text style={styles.timeSelectionInner}>12:00</Text>
         </View>
       </View>
-      <AlarmRepeat />
+      <AlarmCreationDetails />
     </View>
   );
 }
@@ -21,9 +21,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#201F1F',
-  },
-  Alarm: {
-    flexDirection: 'column',
   },
   timeInner: {
     backgroundColor: '#201F1F',
