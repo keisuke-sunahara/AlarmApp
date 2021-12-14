@@ -1,13 +1,37 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Sound from 'react-native-sound';
+import {
+  View, StyleSheet, Text, TextInput, Button,
+} from 'react-native';
 
 export default function AlarmSetting() {
+  const [time, setTime] = useState();
+  const count = 0;
+  const handlePress = setInterval(() => {
+    count+++
+    if ( count === time ) {
+      this.sound = new Sound(['<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/jp/album/%E6%9C%AC%E5%BD%93%E6%9C%AC%E6%B0%97/1147516278?i=1147516289"></iframe>'], 
+      Sound.MAIN_BUNDLE, error => {
+        if ( error ) {
+          console.log("failed to load the sound.", error);
+        }
+      });
+    }
+  },1000);
   return (
     <View style={styles.container}>
       <View style={styles.timeInner}>
         <Text style={styles.time}>時間</Text>
         <View style={styles.timeSelection}>
-          <Text style={styles.timeSelectionInner}>12:00</Text>
+          <TextInput
+            value={time}
+            style={styles.timeSelectionInner}
+            onChangeText={(text) => { setTime(text); }}
+          />
+          <Button
+            label="Submit"
+            onPress={handlePress}
+          />
         </View>
       </View>
     </View>

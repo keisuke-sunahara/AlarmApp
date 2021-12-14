@@ -1,18 +1,42 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState, useCallback } from 'react';
+// import Sound from 'react-native-sound';
+import {
+  View, StyleSheet, Text, TextInput, Alert, TouchableOpacity,
+} from 'react-native';
 // import AlarmSetting from '../components/AlarmSetting';
-import AlarmCreationDetails from '../components/AlarmCreationDetails';
 
 export default function AlarmCreateScreen() {
+  const [time, setTime] = useState();
+  const [count, setCount] = useState(0);
+
+  const handlePress = useCallback(() => {
+    setInterval(() => {
+      setCount(() => count + 1);
+      console.log(count);
+      if (`${count}` === `${time}`) {
+        Alert.alert(`${count}`);
+        clearInterval(handlePress);
+      }
+    }, 1000);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.timeInner}>
         <Text style={styles.time}>時間</Text>
         <View style={styles.timeSelection}>
-          <Text style={styles.timeSelectionInner}>12:00</Text>
+          <TextInput
+            value={time}
+            style={styles.timeSelectionInner}
+            onChangeText={(text) => { setTime(text); }}
+          />
+          <TouchableOpacity
+            onPress={() => handlePress(count)}
+          >
+            <Text style={styles.text}>start</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <AlarmCreationDetails />
     </View>
   );
 }
@@ -48,6 +72,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     lineHeight: 32,
     fontSize: 22,
+    color: '#FFFFFF',
+  },
+  text: {
     color: '#FFFFFF',
   },
 });
