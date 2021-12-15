@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 // import Sound from 'react-native-sound';
 import {
   View, StyleSheet, Text, TextInput, Alert, TouchableOpacity,
@@ -6,18 +6,23 @@ import {
 // import AlarmSetting from '../components/AlarmSetting';
 
 export default function AlarmCreateScreen() {
-  const [time, setTime] = useState();
-  const [count, setCount] = useState(0);
-
-  const handlePress = useCallback(() => {
-    setInterval(() => {
-      setCount(() => count + 1);
+  const inputVal = useRef(null);
+  const inputCount = useRef(null);
+  const start = useCallback(() => {
+    let count = 0;
+    inputVal.current = setInterval(() => {
+      count += 1;
       console.log(count);
-      if (`${count}` === `${time}`) {
+      if (`${count}` === `${inputCount.current}`) {
         Alert.alert(`${count}`);
-        clearInterval(handlePress);
+        clearInterval(inputVal.current);
       }
     }, 1000);
+  }, []);
+
+  const stop = useCallback(() => {
+    clearInterval(inputVal.current);
+    inputVal.current = null;
   }, []);
 
   return (
@@ -26,14 +31,19 @@ export default function AlarmCreateScreen() {
         <Text style={styles.time}>時間</Text>
         <View style={styles.timeSelection}>
           <TextInput
-            value={time}
+            value={inputVal.current}
             style={styles.timeSelectionInner}
-            onChangeText={(text) => { setTime(text); }}
+            onChangeText={(text) => { inputCount.current = text; }}
           />
           <TouchableOpacity
-            onPress={() => handlePress(count)}
+            onPress={start}
           >
             <Text style={styles.text}>start</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={stop}
+          >
+            <Text style={styles.text}>stop</Text>
           </TouchableOpacity>
         </View>
       </View>
