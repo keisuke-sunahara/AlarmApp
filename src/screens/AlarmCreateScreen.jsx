@@ -1,25 +1,33 @@
 import React, { useCallback, useRef } from 'react';
 // import Sound from 'react-native-sound';
+// import { TimePicker } from 'react-native-simple-time-picker';
+
 import {
-  View, StyleSheet, Text, TextInput, Alert, TouchableOpacity,
+  View, StyleSheet, Text, Alert, TouchableOpacity, TextInput, Linking,
 } from 'react-native';
 // import AlarmSetting from '../components/AlarmSetting';
 
 export default function AlarmCreateScreen() {
   const inputVal = useRef(null);
-  const inputCount = useRef(null);
+  const leftHours = useRef(null);
+  const rightMinutes = useRef(null);
+  const tell = '08060388517';
   const start = useCallback(() => {
-    let count = 0;
     inputVal.current = setInterval(() => {
-      count += 1;
-      console.log(count);
-      if (`${count}` === `${inputCount.current}`) {
-        Alert.alert(`${count}`);
-        clearInterval(inputVal.current);
+      const nowHours = new Date().getHours().toLocaleString();
+      let nowMinutes = new Date().getMinutes().toLocaleString();
+      if (nowMinutes.length === 1) {
+        nowMinutes = 0 + nowMinutes;
+      }
+      if (`${leftHours.current}` === `${nowHours}`) {
+        console.log(nowMinutes);
+        if (`${rightMinutes.current}` === `${nowMinutes}`) {
+          Alert.alert('成功');
+          clearInterval(inputVal.current);
+        }
       }
     }, 1000);
   }, []);
-
   const stop = useCallback(() => {
     clearInterval(inputVal.current);
     inputVal.current = null;
@@ -29,25 +37,52 @@ export default function AlarmCreateScreen() {
     <View style={styles.container}>
       <View style={styles.timeInner}>
         <Text style={styles.time}>時間</Text>
-        <View style={styles.timeSelection}>
+
+        <View
+          style={styles.textInput}
+        >
           <TextInput
-            value={inputVal.current}
-            style={styles.timeSelectionInner}
-            onChangeText={(text) => { inputCount.current = text; }}
+            style={styles.leftHoursInner}
+            keyboardType="number-pad"
+            value={leftHours.current}
+            onChangeText={(text) => { leftHours.current = text; }}
+            maxLength={2}
           />
-          <TouchableOpacity
-            onPress={start}
-          >
-            <Text style={styles.text}>start</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={stop}
-          >
-            <Text style={styles.text}>stop</Text>
-          </TouchableOpacity>
+          <View style={styles.semicolon}>
+            <Text style={styles.semicolonInner}>:</Text>
+          </View>
+          <TextInput
+            style={styles.rightMinutesInner}
+            keyboardType="number-pad"
+            value={rightMinutes.current}
+            onChangeText={(text) => { rightMinutes.current = text; }}
+            maxLength={2}
+          />
         </View>
+
+        <TouchableOpacity
+          onPress={start}
+        >
+          <Text style={styles.text}>start</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={stop}
+        >
+          <Text style={styles.text}>stop</Text>
+        </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        class="submit"
+        style={styles.tell}
+        onPress={() => {
+          const phoneNumber = `tel:${tell}`;
+          Linking.openURL(phoneNumber);
+        }}
+      >
+        <Text>TELL</Text>
+      </TouchableOpacity>
     </View>
+
   );
 }
 
@@ -57,7 +92,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#201F1F',
   },
   timeInner: {
-    backgroundColor: '#201F1F',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 43,
@@ -72,19 +106,47 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
   },
-  timeSelection: {
+  textInput: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: '#2F2F2F',
-    height: 36,
     borderRadius: 10,
-  },
-  timeSelectionInner: {
+    width: 71,
+    height: 36,
     paddingVertical: 2,
     paddingHorizontal: 8,
-    lineHeight: 32,
-    fontSize: 22,
-    color: '#FFFFFF',
   },
   text: {
     color: '#FFFFFF',
+  },
+  leftHoursInner: {
+    width: 25,
+    lineHeight: 25,
+    fontSize: 20,
+    color: '#FFFFFF',
+  },
+  rightMinutesInner: {
+    width: 25,
+    lineHeight: 25,
+    fontSize: 20,
+    color: '#FFFFFF',
+    textAlign: 'right',
+  },
+  semicolon: {
+    height: 31,
+    width: 7,
+
+  },
+  semicolonInner: {
+    lineHeight: 32,
+    fontSize: 20,
+    color: '#FFFFFF',
+  },
+  tell: {
+    fontSize: 16,
+    lineHeight: 32,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
 });
